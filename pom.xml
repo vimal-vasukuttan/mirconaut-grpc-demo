@@ -78,6 +78,16 @@
       <artifactId>junit-jupiter-engine</artifactId>
       <scope>test</scope>
     </dependency>
+    <dependency>
+      <groupId>io.micronaut.grpc</groupId>
+      <artifactId>micronaut-grpc-server-runtime</artifactId>
+      <version>4.0.2-SNAPSHOT</version>
+    </dependency>
+    <dependency>
+      <groupId>io.micronaut.grpc</groupId>
+      <artifactId>micronaut-grpc-client-runtime</artifactId>
+      <version>4.0.2-SNAPSHOT</version>
+    </dependency>
   </dependencies>
   <build>
     <plugins>
@@ -118,6 +128,34 @@
       <plugin>
         <groupId>com.github.os72</groupId>
         <artifactId>protoc-jar-maven-plugin</artifactId>
+        <version>3.11.4</version>
+        <executions>
+          <execution>
+            <phase>generate-sources</phase>
+            <goals>
+              <goal>run</goal>
+            </goals>
+            <configuration>
+              <protocVersion>3.11.4</protocVersion>
+              <addSources>none</addSources>
+              <inputDirectories>
+                <include>src/main/resources/proto</include>
+              </inputDirectories>
+              <outputTargets>
+              <outputTarget>
+                <type>java</type>
+                <addSources>none</addSources>
+                <outputDirectory>src/main/java/com/example/grpc</outputDirectory>
+              </outputTarget>
+                <outputTarget>
+                  <type>grpc-java</type>
+                  <outputDirectory>src/main/java/com/example/grpc</outputDirectory>
+                  <pluginArtifact>io.grpc:protoc-gen-grpc-java:1.0.1</pluginArtifact>
+                </outputTarget>
+              </outputTargets>
+            </configuration>
+          </execution>
+        </executions>
       </plugin>
     </plugins>
   </build>
